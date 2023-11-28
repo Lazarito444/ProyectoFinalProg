@@ -3,8 +3,6 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,8 +16,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Toolkit;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import java.awt.event.MouseMotionAdapter;
 
 public class MainFrame extends JFrame {
 
@@ -30,11 +27,12 @@ public class MainFrame extends JFrame {
 	
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int xMouse, yMouse;
 	
 	public MainFrame() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 800);
+		setBounds(100, 100, screenSize.width, screenSize.height);
 		contentPane = new JPanel();
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,16 +43,35 @@ public class MainFrame extends JFrame {
 		JPanel bg = new JPanel();
 		bg.setLayout(null);
 		bg.setBackground(new Color(238, 238, 238));
-		bg.setBounds(0, 0, 1200, 800);
+		bg.setBounds(0, 0, screenSize.width, screenSize.height);
 		contentPane.add(bg);
 		
 		topbar = new JPanel();
+		topbar.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				
+				if (getWidth() == screenSize.width) return;
+				
+				int x = e.getXOnScreen();
+				int y = e.getYOnScreen();
+				
+				setLocation(x - xMouse, y - yMouse);
+			}
+		});
+		topbar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xMouse = e.getX();
+				yMouse = e.getY();
+			}
+		});
 		topbar.setBackground(new Color(0, 71, 130));
-		topbar.setBounds(0, 0, 1200, 40);
+		topbar.setBounds(0, 0, screenSize.width, 40);
 		bg.add(topbar);
 		
 		JPanel exitBtn = new JPanel();
-		exitBtn.setBounds(1160, 0, 40, 40);
+		exitBtn.setBounds(topbar.getWidth()-40, 0, 40, 40);
 		exitBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -82,7 +99,7 @@ public class MainFrame extends JFrame {
 		exitIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/x (1).png")));
 		
 		JPanel maxBtn = new JPanel();
-		maxBtn.setBounds(1120, 0, 40, 40);
+		maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
 		maxBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -96,12 +113,23 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				if (getExtendedState() != MainFrame.MAXIMIZED_BOTH) {
-					setExtendedState(MainFrame.MAXIMIZED_BOTH);
-					topbar.setBounds(0, 0, 1600, 40);
+				if (getWidth() == screenSize.width) {
+					setBounds(100, 100, 1200, 800);
+					bg.setBounds(0, 0, 1200, 800);
+					topbar.setBounds(0, 0, 1200, 40);
+					exitBtn.setBounds(topbar.getWidth()-40, 0, 40, 40);
+					maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
+					
+					sidebar.setBounds(0, 0, 250, 800);
 				
 				} else {
-					setExtendedState(MainFrame.NORMAL);
+					setBounds(0, 0, screenSize.width, screenSize.height);
+					bg.setBounds(0, 0, screenSize.width, screenSize.height);
+					topbar.setBounds(0, 0, screenSize.width, 40);
+					exitBtn.setBounds(topbar.getWidth()-40, 0, 40, 40);
+					maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
+					
+					sidebar.setBounds(0, 0, 250, screenSize.height);
 				}
 			}
 		});
@@ -121,7 +149,7 @@ public class MainFrame extends JFrame {
 		
 		sidebar = new JPanel();
 		sidebar.setBackground(new Color(27, 85, 139));
-		sidebar.setBounds(0, 0, 250, 800);
+		sidebar.setBounds(0, 0, 250, screenSize.height);
 		sidebar.setPreferredSize(null);
 		bg.add(sidebar);
 		sidebar.setLayout(null);

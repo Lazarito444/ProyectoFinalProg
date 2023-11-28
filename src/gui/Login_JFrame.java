@@ -79,6 +79,7 @@ public class Login_JFrame extends JFrame {
 		sidebar.add(slogan);
 		
 		JPanel exit = new JPanel();
+		exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
