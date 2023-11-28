@@ -136,6 +136,13 @@ public class Login_JFrame extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				btn.setBackground(new Color(27, 85, 139));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (1==1) {
+					dispose();
+					MainFrame mainFrame = new MainFrame();
+				}
+			}
 		});
 		btn.setBackground(new Color(27, 85, 139));
 		btn.setBounds(213, 370, 125, 45);

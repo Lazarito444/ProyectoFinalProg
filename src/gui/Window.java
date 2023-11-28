@@ -28,7 +28,7 @@ public class Window {
 	}
 
 	private void initialize() {
-		JFrame login_JFrame = new Login_JFrame();
-		login_JFrame.setVisible(true);
+		//JFrame login_JFrame = new Login_JFrame();
+		JFrame mainFrame = new MainFrame();
 	}
 }
