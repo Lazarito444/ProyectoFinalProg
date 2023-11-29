@@ -2,20 +2,13 @@ package gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
 public class Window {
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Window window = new Window();
+					new Window();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -28,7 +21,7 @@ public class Window {
 	}
 
 	private void initialize() {
-		JFrame login_JFrame = new Login_JFrame();
+		new Login_JFrame();
 		//JFrame mainFrame = new MainFrame();
 	}
 }

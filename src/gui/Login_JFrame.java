@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import java.awt.ComponentOrientation;
@@ -20,6 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Login_JFrame extends JFrame {
 
@@ -28,6 +32,7 @@ public class Login_JFrame extends JFrame {
 	private JTextField userField;
 	private JPasswordField passwordField;
 	private JLabel xLabel;
+
 
 	public Login_JFrame() {
 		setBounds(new Rectangle(0, 0, 800, 450));
@@ -139,10 +144,38 @@ public class Login_JFrame extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (1==1) {
+				
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+				
+				Statement statement = con.createStatement();
+				
+				String user = userField.getText();
+				String pass = String.valueOf(passwordField.getPassword());
+				
+				ResultSet resultSet = statement.executeQuery("SELECT Nombre_Personal, Contraseña FROM personal WHERE Usuario='"+user+"'");
+				
+				resultSet.next();
+				
+				if (pass.equals(resultSet.getString("Contraseña"))) {
 					dispose();
-					MainFrame mainFrame = new MainFrame();
+					String name = resultSet.getString("Nombre_Personal");
+					new MainFrame(name);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
 				}
+				
+				con.close();
+				
+			} catch(ClassNotFoundException err) {
+				err.printStackTrace();
+				
+			} catch(SQLException err) {
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+				err.printStackTrace();
+			}
+				
 			}
 		});
 		btn.setBackground(new Color(27, 85, 139));

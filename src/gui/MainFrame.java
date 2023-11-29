@@ -8,8 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,19 +15,24 @@ import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.CardLayout;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel sidebar;
-	private JPanel topbar;
+	private JPanel topbar, cardPanel;
 	
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int xMouse, yMouse;
 	
-	public MainFrame() {
+	public MainFrame(String username) {
+		initialize(username);
+	}	
+	
+	public void initialize(String username) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, screenSize.width, screenSize.height);
@@ -43,7 +46,7 @@ public class MainFrame extends JFrame {
 		JPanel bg = new JPanel();
 		bg.setLayout(null);
 		bg.setBackground(new Color(238, 238, 238));
-		bg.setBounds(0, 0, screenSize.width, screenSize.height);
+		bg.setBounds(0, 0, 1600, 900);
 		contentPane.add(bg);
 		
 		topbar = new JPanel();
@@ -84,9 +87,15 @@ public class MainFrame extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
-			}
-		});
+	                int confirm = JOptionPane.showConfirmDialog(null,
+	                        "¿Estás seguro de que deseas cerrar el programa?",
+	                        "Confirmar Cierre",
+	                        JOptionPane.YES_NO_OPTION);
+				
+				if (confirm == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+		}});
 		exitBtn.setBackground(new Color(0, 71, 130));
 		exitBtn.setLayout(null);
 		
@@ -114,14 +123,18 @@ public class MainFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 
 				if (getWidth() == screenSize.width) {
-					setBounds(100, 100, 1200, 800);
+					/*setBounds(100, 100, 1200, 800);
 					bg.setBounds(0, 0, 1200, 800);
 					topbar.setBounds(0, 0, 1200, 40);
 					exitBtn.setBounds(topbar.getWidth()-40, 0, 40, 40);
 					maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
 					
 					sidebar.setBounds(0, 0, 250, 800);
-				
+				*/
+					//cardPanel.setBounds(250,  40,  getWidth()-250, getHeight()-40);
+					
+					setExtendedState(JFrame.ICONIFIED);
+					
 				} else {
 					setBounds(0, 0, screenSize.width, screenSize.height);
 					bg.setBounds(0, 0, screenSize.width, screenSize.height);
@@ -130,6 +143,9 @@ public class MainFrame extends JFrame {
 					maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
 					
 					sidebar.setBounds(0, 0, 250, screenSize.height);
+					
+					cardPanel.setBounds(250, 40, screenSize.width-250, screenSize.height-40);
+					
 				}
 			}
 		});
@@ -141,7 +157,7 @@ public class MainFrame extends JFrame {
 		maxIcon.setForeground(new Color(255, 255, 255));
 		maxIcon.setBounds(5, 5, 30, 30);
 		maxBtn.add(maxIcon);
-		maxIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/maximizar (2) (2).png")));
+		maxIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/minimizar (1).png")));
 		topbar.setLayout(null);
 		topbar.add(exitBtn);
 		topbar.add(maxBtn);
@@ -322,6 +338,14 @@ public class MainFrame extends JFrame {
 		gReportesLbl.setBounds(0, 0, 250, 60);
 		gReportes.add(gReportesLbl);
 		
+		cardPanel = new JPanel();
+		cardPanel.setBackground(new Color(238, 238, 238));
+		cardPanel.setBounds(250, 40, 1350, 860);
+		bg.add(cardPanel);
+		cardPanel.setLayout(new CardLayout(0, 0));
+		
+		
+		cardPanel.add(new BienvenidaPanel(username));
 		
 		setUndecorated(true);
 		setLocationRelativeTo(null);
