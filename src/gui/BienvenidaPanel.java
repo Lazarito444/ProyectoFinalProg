@@ -41,7 +41,7 @@ public class BienvenidaPanel extends JPanel {
 		JLabel bienvenidaLbl = new JLabel("¡Bienvenido al sistema de gestión del hospital, "+username+"!");
 		bienvenidaLbl.setForeground(new Color(255, 255, 255));
 		bienvenidaLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 28));
-		bienvenidaLbl.setBounds(100, 50, 620, 40);
+		bienvenidaLbl.setBounds(100, 50, 752, 40);
 		header.add(bienvenidaLbl);
 		
 		LocalDate fecha = LocalDate.now();

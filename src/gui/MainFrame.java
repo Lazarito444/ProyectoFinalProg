@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.CardLayout;
+import java.awt.Cursor;
 
 public class MainFrame extends JFrame {
 
@@ -182,12 +183,32 @@ public class MainFrame extends JFrame {
 		sidebar.add(hospital);
 		
 		JPanel bienvenida = new JPanel();
+		bienvenida.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bienvenida.setBackground(new Color(50, 142, 227));
 		bienvenida.setBounds(0, 200, 250, 60);
 		sidebar.add(bienvenida);
 		bienvenida.setLayout(null);
 		
 		JLabel bienvenidaLbl = new JLabel("Bienvenida");
+		bienvenida.addMouseListener(new MouseAdapter() {
+			
+			public void mouseEntered(MouseEvent e) {
+				bienvenida.setBackground(new Color(50, 142, 227));
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				bienvenida.setBackground(new Color(33, 131, 222));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new BienvenidaPanel(username));
+				cardPanel.repaint();
+				cardPanel.revalidate();
+			}
+		});
 		bienvenidaLbl.setForeground(new Color(255, 255, 255));
 		bienvenidaLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 20));
 		bienvenidaLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -195,6 +216,7 @@ public class MainFrame extends JFrame {
 		bienvenida.add(bienvenidaLbl);
 		
 		JPanel gPacientes = new JPanel();
+		gPacientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		gPacientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -204,6 +226,13 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gPacientes.setBackground(new Color(33, 131, 222));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new GPacientesPanel());
+				cardPanel.repaint();
+				cardPanel.revalidate();
 			}
 		});
 		gPacientes.setBackground(new Color(33, 131, 222));
@@ -219,6 +248,7 @@ public class MainFrame extends JFrame {
 		gPacientes.add(gPacientesLbl);
 		
 		JPanel gPersonal = new JPanel();
+		gPersonal.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		gPersonal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -243,6 +273,7 @@ public class MainFrame extends JFrame {
 		gPersonal.add(gPersonalLbl);
 		
 		JPanel gInventario = new JPanel();
+		gInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		gInventario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -267,6 +298,7 @@ public class MainFrame extends JFrame {
 		gInventario.add(gInventarioLbl);
 		
 		JPanel facturacionPagos = new JPanel();
+		facturacionPagos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		facturacionPagos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -291,6 +323,7 @@ public class MainFrame extends JFrame {
 		facturacionPagos.add(facturacionPagosLbl);
 		
 		JPanel gVentas = new JPanel();
+		gVentas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		gVentas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -315,6 +348,7 @@ public class MainFrame extends JFrame {
 		gVentas.add(gVentasLbl);
 		
 		JPanel gReportes = new JPanel();
+		gReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		gReportes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
