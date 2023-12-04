@@ -1,15 +1,13 @@
 package gui;
 
 import java.awt.Color;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Toolkit;
-
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -19,6 +17,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.Cursor;
 import java.awt.Dimension;
 
@@ -35,12 +39,29 @@ public class GPacientesPanel extends JPanel {
 	private JTextField diseaseTF;
 	private JTable table;
 	private JTextField searchTF;
+	@SuppressWarnings("serial")
+	public DefaultTableModel tableModel = new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"ID", "Nombre", "Apellido", "Fecha Nacimiento", "Enfermedad", "Direcci\u00F3n", "Tel\u00E9fono", "Género"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
 
 	/**
 	 * Create the panel.
 	 */
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private JTextField telTF;
 	public GPacientesPanel() {
 		
 		setBackground(new Color(238, 238, 238));
@@ -182,17 +203,53 @@ public class GPacientesPanel extends JPanel {
 		diseaseTF.setBounds(300, 300, 300, 50);
 		panel.add(diseaseTF);
 		
-		JComboBox gender = new JComboBox();
+		JComboBox<String> gender = new JComboBox<>();
 		gender.setBackground(new Color(255, 255, 255));
 		gender.setBorder(new LineBorder(new Color(0, 128, 192), 3));
 		gender.setFont(new Font("Roboto Condensed", Font.BOLD, 22));
-		gender.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
+		gender.setModel(new DefaultComboBoxModel<>(new String[] {"Masculino", "Femenino"}));
 		gender.setBounds(646, 300, 184, 48);
 		panel.add(gender);
 		
 		JPanel addBtn = new JPanel();
 		addBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		addBtn.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			String nombre = nameTF.getText();
+			String apellido = surnameTF.getText();
+			String fechaN = birthTF.getText();
+			String enfermedad = diseaseTF.getText();
+			String direccion = neighborhoodTF.getText()+", "+stateTF.getText();
+			String tel = telTF.getText();
+			int gen = gender.getSelectedIndex();
+			String gender[] = new String[] {"M", "F"};
+			
+			try {
+				
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+				
+				Statement statement = con.createStatement();
+				
+				statement.executeUpdate("INSERT INTO Pacientes (Nombre, Apellido, FechaNacimiento, Enfermedad, Direccion, Telefono, Genero) VALUES ('"
+						+nombre+"','"+apellido+"','"+fechaN+"','"+enfermedad+"','"+direccion+"','"+tel+"','"+gender[gen]+"')");
+				
+				con.close();
+				
+				
+				JOptionPane.showMessageDialog(null, "Paciente añadido");
+				actualizarTabla();
+				
+			} catch(ClassNotFoundException err) {
+				err.printStackTrace();
+			} catch(SQLException err) {
+				err.printStackTrace();
+			}
+			}
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				addBtn.setBackground(new Color(50, 142, 227));
@@ -219,23 +276,11 @@ public class GPacientesPanel extends JPanel {
 		panel.add(tableScrollPane);
 		
 		table = new JTable();
-		table.setShowVerticalLines(false);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"ID", "C\u00E9dula", "Nombre", "Apellido", "G\u00E9nero", "Fecha Nacimiento", "Tel\u00E9fono", "Direcci\u00F3n", "Enfermedad"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		table.setFont(new Font("Roboto Condensed", Font.BOLD, 14));
+		table.setModel(tableModel);
 		tableScrollPane.setViewportView(table);
+		table.getTableHeader().setFont(new Font("Roboto Condensed", Font.BOLD, 16));
+		
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(0, 0, 0));
@@ -273,12 +318,17 @@ public class GPacientesPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				searchBtn.setBackground(new Color(0, 128, 192));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				filtrarTabla(searchTF.getText());
+			}
 		});
 		searchBtn.setLayout(null);
 		searchBtn.setBackground(new Color(0, 128, 192));
 		searchBtn.setBounds(599, 384, 50, 50);
 		panel.add(searchBtn);
 		
+		table.setRowHeight(30);
 		JLabel searchIcon = new JLabel("");
 		searchIcon.setIcon(new ImageIcon(GPacientesPanel.class.getResource("/gui/images/lupa (1).png")));
 		searchIcon.setHorizontalAlignment(SwingConstants.CENTER);
@@ -296,6 +346,15 @@ public class GPacientesPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				editBtn.setBackground(new Color(0, 128, 192));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				EditPacienteFrame edit = new EditPacienteFrame();
+				
+				while(!edit.isOpened) {
+					actualizarTabla();
+					break;
+				}
 			}
 		});
 		editBtn.setLayout(null);
@@ -320,6 +379,32 @@ public class GPacientesPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				delBtn.setBackground(new Color(0, 128, 192));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int idEliminar = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite el ID del paciente a eliminar de la BD."));
+				
+				try {
+					
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+					
+					Statement statement = con.createStatement();
+					
+					statement.executeUpdate("DELETE FROM Pacientes WHERE ID_Paciente='"+idEliminar+"'");
+					
+					con.close();
+					
+					
+					JOptionPane.showMessageDialog(null, "Paciente eliminado");
+					actualizarTabla();
+					
+				} catch(ClassNotFoundException err) {
+					err.printStackTrace();
+				} catch(SQLException err) {
+					err.printStackTrace();
+				}
+				
+			}
 		});
 		delBtn.setLayout(null);
 		delBtn.setBackground(new Color(0, 128, 192));
@@ -333,5 +418,102 @@ public class GPacientesPanel extends JPanel {
 		delLbl.setBounds(0, 0, 219, 48);
 		delBtn.add(delLbl);
 		
+		JPanel telPanel = new JPanel();
+		telPanel.setLayout(null);
+		telPanel.setBackground(new Color(0, 128, 192));
+		telPanel.setBounds(959, 100, 140, 50);
+		panel.add(telPanel);
+		
+		JLabel telLbl = new JLabel("Teléfono:");
+		telLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		telLbl.setForeground(Color.WHITE);
+		telLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 24));
+		telLbl.setBounds(0, 0, 140, 50);
+		telPanel.add(telLbl);
+		
+		telTF = new JTextField();
+		telTF.setFont(new Font("Roboto Condensed", Font.BOLD, 18));
+		telTF.setColumns(10);
+		telTF.setBorder(new LineBorder(new Color(0, 128, 192), 3));
+		telTF.setBounds(1099, 100, 200, 50);
+		panel.add(telTF);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				panel_1.setBackground(new Color(50, 142, 227));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				panel_1.setBackground(new Color(0, 128, 192));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				actualizarTabla();
+			}
+		});
+		panel_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel_1.setBackground(new Color(0, 128, 192));
+		panel_1.setBounds(1153, 300, 50, 50);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(GPacientesPanel.class.getResource("/gui/images/actualizar (1).png")));
+		lblNewLabel.setBounds(0, 0, 50, 50);
+		panel_1.add(lblNewLabel);
+		
+		actualizarTabla();
+	}
+	
+	public void actualizarTabla() {
+		tableModel.setRowCount(0);
+		String query = "SELECT * FROM Pacientes";
+		try {
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			ResultSet rSet = statement.executeQuery();
+			
+			
+			while (rSet.next()) {
+				tableModel.addRow(new Object[] {rSet.getInt(1), rSet.getString(2), rSet.getString(3), rSet.getString(4), 
+						rSet.getString(5), rSet.getString(6), rSet.getString(7), rSet.getString(8)});
+			}
+			con.close();
+			
+		} catch(ClassNotFoundException err) {
+			err.printStackTrace();
+		} catch(SQLException err) {
+			err.printStackTrace();
+		}
+	}
+	
+	public void filtrarTabla(String tel) {
+		tableModel.setRowCount(0);
+		String query = "SELECT * FROM Pacientes WHERE Telefono LIKE '%"+tel+"%'";
+		try {
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+			
+			PreparedStatement statement = con.prepareStatement(query);
+			ResultSet rSet = statement.executeQuery();
+			
+			
+			while (rSet.next()) {
+				tableModel.addRow(new Object[] {rSet.getInt(1), rSet.getString(2), rSet.getString(3), rSet.getString(4), 
+						rSet.getString(5), rSet.getString(6), rSet.getString(7), rSet.getString(8)});
+			}
+			con.close();
+			
+		} catch(ClassNotFoundException err) {
+			err.printStackTrace();
+		} catch(SQLException err) {
+			err.printStackTrace();
+		}
 	}
 }

@@ -259,6 +259,13 @@ public class MainFrame extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				gPersonal.setBackground(new Color(33, 131, 222));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new GPersonalPanel());
+				cardPanel.repaint();
+				cardPanel.revalidate();
+			}
 		});
 		gPersonal.setBackground(new Color(33, 131, 222));
 		gPersonal.setBounds(0, 320, 250, 60);
@@ -266,6 +273,7 @@ public class MainFrame extends JFrame {
 		gPersonal.setLayout(null);
 		
 		JLabel gPersonalLbl = new JLabel("Gestión de personal");
+
 		gPersonalLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		gPersonalLbl.setForeground(Color.WHITE);
 		gPersonalLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 20));
@@ -283,6 +291,14 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gInventario.setBackground(new Color(33, 131, 222));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new GInventarioPanel());
+				cardPanel.repaint();
+				cardPanel.revalidate();
 			}
 		});
 		gInventario.setBackground(new Color(33, 131, 222));

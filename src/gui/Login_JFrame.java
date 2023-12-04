@@ -154,13 +154,13 @@ public class Login_JFrame extends JFrame {
 				String user = userField.getText();
 				String pass = String.valueOf(passwordField.getPassword());
 				
-				ResultSet resultSet = statement.executeQuery("SELECT Nombre_Personal, Contraseña FROM personal WHERE Usuario='"+user+"'");
+				ResultSet resultSet = statement.executeQuery("SELECT Nombre, Contraseña FROM Personal WHERE Usuario='"+user+"'");
 				
 				resultSet.next();
 				
 				if (pass.equals(resultSet.getString("Contraseña"))) {
 					dispose();
-					String name = resultSet.getString("Nombre_Personal");
+					String name = resultSet.getString("Nombre");
 					new MainFrame(name);
 				} else {
 					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
