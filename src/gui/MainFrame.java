@@ -106,7 +106,7 @@ public class MainFrame extends JFrame {
 		exitIcon.setHorizontalTextPosition(SwingConstants.CENTER);
 		exitIcon.setPreferredSize(new Dimension(40, 40));
 		exitIcon.setHorizontalAlignment(SwingConstants.CENTER);
-		exitIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/x (1).png")));
+		exitIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/images/x (1).png")));
 		
 		JPanel maxBtn = new JPanel();
 		maxBtn.setBounds(topbar.getWidth()-80, 0, 40, 40);
@@ -158,7 +158,7 @@ public class MainFrame extends JFrame {
 		maxIcon.setForeground(new Color(255, 255, 255));
 		maxIcon.setBounds(5, 5, 30, 30);
 		maxBtn.add(maxIcon);
-		maxIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/minimizar (1).png")));
+		maxIcon.setIcon(new ImageIcon(MainFrame.class.getResource("/gui/images/minimizar (1).png")));
 		topbar.setLayout(null);
 		topbar.add(exitBtn);
 		topbar.add(maxBtn);
@@ -296,7 +296,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cardPanel.removeAll();
-				cardPanel.add(new GInventarioPanel());
+				cardPanel.add(new GMedicamentosPanel());
 				cardPanel.repaint();
 				cardPanel.revalidate();
 			}
@@ -306,7 +306,7 @@ public class MainFrame extends JFrame {
 		sidebar.add(gInventario);
 		gInventario.setLayout(null);
 		
-		JLabel gInventarioLbl = new JLabel("Gestión de inventario");
+		JLabel gInventarioLbl = new JLabel("Gestión de medicamentos");
 		gInventarioLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		gInventarioLbl.setForeground(Color.WHITE);
 		gInventarioLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 20));

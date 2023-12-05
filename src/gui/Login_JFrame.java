@@ -60,7 +60,7 @@ public class Login_JFrame extends JFrame {
 		logo.setBounds(43, 35, 164, 164);
 		sidebar.add(logo);
 		logo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		logo.setIcon(new ImageIcon(Login_JFrame.class.getResource("/gui/LogoHospital.png")));
+		logo.setIcon(new ImageIcon(Login_JFrame.class.getResource("/gui/images/LogoHospital.png")));
 		
 		JLabel hospital = new JLabel("HOSPITAL DR. TUGO");
 		hospital.setHorizontalAlignment(SwingConstants.CENTER);

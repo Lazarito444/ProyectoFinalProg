@@ -38,14 +38,6 @@ public class Personal extends Persona {
         this.rol = rol;
     }
 
-	@Override
-	public void realizarAccionEspecifica() {
-		// TODO Auto-generated method stub
-		System.out.println("1. Asignar turnos a pacientes.");
-        asignarTurnos();
-        System.out.println("2. Generar informes médicos.");
-        generarInformesMedicos();
-	}
 	private void asignarTurnos() {
         System.out.println("Turnos asignados a pacientes.");
     }
@@ -53,5 +45,4 @@ public class Personal extends Persona {
     private void generarInformesMedicos() {
         System.out.println("Informes médicos generados.");
     }
-
 }

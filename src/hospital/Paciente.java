@@ -50,18 +50,6 @@ public class Paciente extends Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-	@Override
-	public void realizarAccionEspecifica() {
-		// TODO Auto-generated method stub
-		System.out.println("1. Programar una cita médica.");
-        programarCitaMedica();
-        System.out.println("2. Consultar su historial médico.");
-        consultarHistorialMedico();
-        System.out.println("3. Ver detalles de facturación.");
-        verDetallesFacturacion();
-		
-	}
 	
 	 private void programarCitaMedica() {
 	        System.out.println("Cita médica programada.");

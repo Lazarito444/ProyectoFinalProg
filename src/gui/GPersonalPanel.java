@@ -370,6 +370,10 @@ public class GPersonalPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				editBtn.setBackground(new Color(33, 131, 222));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new EditPersonalFrame();
+			}
 		});
 		
 		delBtn.addMouseListener(new MouseAdapter() {
@@ -419,6 +423,11 @@ public class GPersonalPanel extends JPanel {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				refreshBtn.setBackground(new Color(33, 131, 222));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				actualizarTabla();
 			}
 		});
 		
