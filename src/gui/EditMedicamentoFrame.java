@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EditMedicamentoFrame extends JFrame {
@@ -158,7 +158,7 @@ public class EditMedicamentoFrame extends JFrame {
 		getContentPane().add(lblNewLabel_2);
 		
 		
-		
+		getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

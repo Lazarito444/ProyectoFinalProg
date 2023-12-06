@@ -325,6 +325,13 @@ public class MainFrame extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				facturacionPagos.setBackground(new Color(33, 131, 222));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new FacturacionPagosPanel());
+				cardPanel.repaint();
+				cardPanel.revalidate();
+			}
 		});
 		facturacionPagos.setBackground(new Color(33, 131, 222));
 		facturacionPagos.setBounds(0, 440, 250, 60);
@@ -349,6 +356,13 @@ public class MainFrame extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gVentas.setBackground(new Color(33, 131, 222));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cardPanel.removeAll();
+				cardPanel.add(new GVentasPanel());
+				cardPanel.repaint();
+				cardPanel.revalidate();
 			}
 		});
 		gVentas.setBackground(new Color(33, 131, 222));
