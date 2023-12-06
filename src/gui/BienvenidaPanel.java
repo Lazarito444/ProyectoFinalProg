@@ -67,7 +67,7 @@ public class BienvenidaPanel extends JPanel {
 		lblNewLabel.setBounds(122, 255, 687, 71);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("<html><ul>\r\n<li>Gestionar a los pacientes del hospital.</li>\r\n<li>Gestionar al personal del hospital.</li>\r\n<li>Gestionar los medicamentos que el hospital tiene disponible.</li>\r\n<li>Realizar facturaciones y cobros</li>\r\n<li>Gestionar las ventas del hospital</li>\r\n<li>Generar reportes relacionados al hospital</li>\r\n</ul></html>");
+		JLabel lblNewLabel_1 = new JLabel("<html><ul>\r\n<li>Gestionar a los pacientes del hospital.</li>\r\n<li>Gestionar al personal del hospital.</li>\r\n<li>Gestionar los medicamentos que el hospital tiene disponible.</li>\r\n<li>Realizar facturaciones y cobros</li>\r\n<li>Gestionar las ventas del hospital</li>\r\n</ul></html>");
 		lblNewLabel_1.setFont(new Font("Roboto Condensed", Font.BOLD, 26));
 		lblNewLabel_1.setBounds(157, 318, 789, 230);
 		panel.add(lblNewLabel_1);

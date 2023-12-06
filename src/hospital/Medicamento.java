@@ -12,6 +12,12 @@ public class Medicamento {
         this.precio = precio;
         this.stock = stock;
     }
+    
+    public Medicamento(String nombre, double precio) {
+    	this.nombre = nombre;
+    	this.precio = precio;
+    	this.stock = 0;
+    }
 
     
     public String getNombre() {
@@ -38,8 +44,7 @@ public class Medicamento {
         this.stock = stock;
     }
     
-    
-    public void actualizarStock(int cantidad) {
+    public void agregarStock(int cantidad) {
          if (cantidad >= 0) {
             stock += cantidad;
             System.out.println("Stock actualizado. Nuevo stock: " + stock);
@@ -48,4 +53,14 @@ public class Medicamento {
         }
 
     }
+
+    public void eliminarStock(int cantidad) {
+        if (cantidad >= 0) {
+           stock -= cantidad;
+           System.out.println("Stock actualizado. Nuevo stock: " + stock);
+       } else {
+           System.out.println("La cantidad debe ser mayor o igual a cero.");
+       }
+
+   }
 }

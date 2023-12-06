@@ -17,6 +17,11 @@ import java.awt.Toolkit;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.CardLayout;
 import java.awt.Cursor;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class MainFrame extends JFrame {
 
@@ -376,31 +381,6 @@ public class MainFrame extends JFrame {
 		gVentasLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 20));
 		gVentasLbl.setBounds(0, 0, 250, 60);
 		gVentas.add(gVentasLbl);
-		
-		JPanel gReportes = new JPanel();
-		gReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		gReportes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				gReportes.setBackground(new Color(50, 142, 227));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				gReportes.setBackground(new Color(33, 131, 222));
-			}
-		});
-		gReportes.setBackground(new Color(33, 131, 222));
-		gReportes.setBounds(0, 560, 250, 60);
-		sidebar.add(gReportes);
-		gReportes.setLayout(null);
-		
-		JLabel gReportesLbl = new JLabel("Generación de reportes");
-		gReportesLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		gReportesLbl.setForeground(Color.WHITE);
-		gReportesLbl.setFont(new Font("Roboto Condensed", Font.BOLD, 20));
-		gReportesLbl.setBounds(0, 0, 250, 60);
-		gReportes.add(gReportesLbl);
 		
 		cardPanel = new JPanel();
 		cardPanel.setBackground(new Color(238, 238, 238));

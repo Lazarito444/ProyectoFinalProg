@@ -1,6 +1,6 @@
 package hospital;
 
-public class Personal extends Persona {
+public class Personal extends Persona implements IPersonal {
 	
 	private String usuario;
     private String contrasena;
@@ -12,6 +12,13 @@ public class Personal extends Persona {
 		this.usuario = usuario;
         this.contrasena = contrasena;
         this.rol = rol;
+	}
+	
+	public Personal(String nombre, String apellido, String usuario, String rol) {
+		super(nombre, apellido);
+		this.usuario = usuario;
+		this.rol = rol;
+		this.contrasena = "12345";
 	}
 	
 	public String getUsuario() {
@@ -38,11 +45,11 @@ public class Personal extends Persona {
         this.rol = rol;
     }
 
-	private void asignarTurnos() {
-        System.out.println("Turnos asignados a pacientes.");
-    }
-
-    private void generarInformesMedicos() {
+	public void generarInformesMedicos() {
         System.out.println("Informes médicos generados.");
     }
+
+	public void atenderPaciente() {
+		System.out.println("Atendiendo al paciente");
+	}
 }

@@ -5,18 +5,23 @@ import java.time.LocalDate;
 public class Paciente extends Persona {
 	
 	 private LocalDate fechaNacimiento;
-	    private HistorialMedico historialMedico;
-	    private String direccion;
-	    private String telefono;
+     private String direccion;
+     private String telefono;
 
 	public Paciente(String nombre, String apellido, LocalDate fechaNacimiento,
-            HistorialMedico historialMedico, String direccion, String telefono) {
+            String direccion, String telefono) {
 		super(nombre, apellido);
 		// TODO Auto-generated constructor stub
 		this.fechaNacimiento = fechaNacimiento;
-        this.historialMedico = historialMedico;
         this.direccion = direccion;
         this.telefono = telefono;
+	}
+	
+	public Paciente(String nombre, String apellido, LocalDate fechaNacimiento, String direccion) {
+		super(nombre, apellido);
+		this.fechaNacimiento = fechaNacimiento;
+		this.direccion = direccion;
+		this.telefono = "No proporcionado.";
 	}
 	
 	public LocalDate getFechaNacimiento() {
@@ -25,14 +30,6 @@ public class Paciente extends Persona {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public HistorialMedico getHistorialMedico() {
-        return historialMedico;
-    }
-
-    public void setHistorialMedico(HistorialMedico historialMedico) {
-        this.historialMedico = historialMedico;
     }
 
     public String getDireccion() {
@@ -50,17 +47,4 @@ public class Paciente extends Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-	
-	 private void programarCitaMedica() {
-	        System.out.println("Cita médica programada.");
-	    }
-
-	 private void consultarHistorialMedico() {
-		 System.out.println("Historial médico consultado.");
-	 }
-
-	 private void verDetallesFacturacion() {
-		 System.out.println("Detalles de facturación visualizados.");
-	 }
-
 }

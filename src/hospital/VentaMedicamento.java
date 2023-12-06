@@ -50,7 +50,7 @@ public class VentaMedicamento {
     
     public void realizarVenta() {
     	if (medicamento.getStock() >= cantidad) {
-            medicamento.actualizarStock(-cantidad);
+            medicamento.eliminarStock(cantidad);
 
             System.out.println("Venta realizada con éxito");
         } else {

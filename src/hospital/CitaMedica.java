@@ -49,7 +49,6 @@ public class CitaMedica {
     public void setMedico(Personal medico) {
         this.medico = medico;
     }
-    
  
     public void programarCita(LocalDate nuevaFecha, LocalTime nuevahora, Paciente nuevoPaciente, Personal nuevoMedico) {
         this.fecha = nuevaFecha;
@@ -57,14 +56,4 @@ public class CitaMedica {
         this.paciente = nuevoPaciente;
         this.medico = nuevoMedico;
     }
-
-    
-    public void cancelarCita() {
-        this.fecha = null;
-        this.hora = null;
-        this.paciente = null;
-        this.medico = null;
-    }
-
-
 }

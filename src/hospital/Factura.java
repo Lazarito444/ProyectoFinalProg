@@ -1,15 +1,21 @@
 package hospital;
 
-public class Facturacion {
+public class Factura {
 	private String tipoFactura;
     private double monto;
-    private String estadoPago;
+    private String razon;
 
     
-    public Facturacion(String tipoFactura, double monto, String estadoPago) {
+    public Factura(String tipoFactura, double monto, String razon) {
         this.tipoFactura = tipoFactura;
         this.monto = monto;
-        this.estadoPago = estadoPago;
+        this.razon = razon;
+    }
+    
+    public Factura(String tipoFactura, double monto) {
+        this.tipoFactura = tipoFactura;
+        this.monto = monto;
+        this.razon = "No especificada";
     }
 
     
@@ -29,12 +35,12 @@ public class Facturacion {
         this.monto = monto;
     }
 
-    public String getEstadoPago() {
-        return estadoPago;
+    public String getRazon() {
+        return razon;
     }
 
-    public void setEstadoPago(String estadoPago) {
-        this.estadoPago = estadoPago;
+    public void setEstadoPago(String razon) {
+        this.razon = razon;
     }
     
     public void registrarPago() {

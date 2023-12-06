@@ -173,7 +173,7 @@ public class Login_JFrame extends JFrame {
 				
 			} catch(SQLException err) {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-				err.printStackTrace();
+				//err.printStackTrace();
 			}
 				
 			}
