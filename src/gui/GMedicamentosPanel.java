@@ -23,6 +23,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import java.util.ArrayList;
+import hospital.Medicamento;
+
 
 public class GMedicamentosPanel extends JPanel {
 
@@ -30,9 +33,9 @@ public class GMedicamentosPanel extends JPanel {
 	private JTextField medicamentoTF;
 	
 
-	/**
-	 * Create the panel.
-	 */
+	public ArrayList<Medicamento> listaMedicamentos = new ArrayList<>();
+	
+	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JTextField precioTF;
 	private JTextField stockTF;
@@ -157,6 +160,8 @@ public class GMedicamentosPanel extends JPanel {
         		String nombre = medicamentoTF.getText();
         		double precio = Double.parseDouble(precioTF.getText());
         		int stock = Integer.parseInt(stockTF.getText());
+        		
+        		listaMedicamentos.add(new Medicamento(nombre, precio, stock));
         		
         		try {
 					

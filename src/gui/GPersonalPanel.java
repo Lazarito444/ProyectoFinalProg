@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.JTextField;
@@ -24,9 +23,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.ImageIcon;
 import javax.swing.DefaultComboBoxModel;
+import java.util.ArrayList;
+import hospital.Personal;
 
 public class GPersonalPanel extends JPanel {
 
@@ -47,9 +47,7 @@ public class GPersonalPanel extends JPanel {
 			}
 		);
 
-	/**
-	 * Create the panel.
-	 */
+	public ArrayList<Personal> listaPersonal = new ArrayList<>();
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JTextField userTF;
 	private JTextField passTF;
@@ -335,7 +333,7 @@ public class GPersonalPanel extends JPanel {
 				int gen = genero.getSelectedIndex();
 				String[] genero = new String[] {"M", "F"};
 				
-				
+				listaPersonal.add(new Personal(nombre, apellido, user, pass));
 				try {
 					
 					Class.forName("com.mysql.cj.jdbc.Driver");

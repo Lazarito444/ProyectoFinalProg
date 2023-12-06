@@ -1,61 +1,42 @@
 package hospital;
 
-public class VentaMedicamento {
-	private Medicamento medicamento; 
-    private double precio;
+public class VentaMedicamento { 
+	private int ID_medicamento;
+	private int ID_cliente;
     private int cantidad;
-    private Paciente cliente;
 
     
-    public VentaMedicamento(Medicamento medicamento, double precio, int cantidad, Paciente cliente) {
-        this.medicamento = medicamento;
-        this.precio = precio;
+    public VentaMedicamento(int id_medicamento, int cantidad, int id_cliente) {
+        this.ID_medicamento = id_medicamento;
         this.cantidad = cantidad;
-        this.cliente = cliente;
+        this.ID_cliente = id_cliente;
     }
-
     
-    public Medicamento getMedicamento() {
-        return medicamento;
-    }
-
-    public void setMedicamento(Medicamento medicamento) {
-        this.medicamento = medicamento;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Paciente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Paciente cliente) {
-        this.cliente = cliente;
-    }
-
+    public int getID_medicamento() {
+		return ID_medicamento;
+	}
     
-    public void realizarVenta() {
-    	if (medicamento.getStock() >= cantidad) {
-            medicamento.eliminarStock(cantidad);
+	public void setID_medicamento(int iD_medicamento) {
+		ID_medicamento = iD_medicamento;
+	}
 
-            System.out.println("Venta realizada con éxito");
-        } else {
-            System.out.println("No hay suficiente stock para realizar la venta");
-        }
+	public int getID_cliente() {
+		return ID_cliente;
+	}
+
+	public void setID_cliente(int iD_cliente) {
+		ID_cliente = iD_cliente;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public void realizarVenta() {
+    	System.out.println("Venta realizada con éxito!");
     }
-
 }

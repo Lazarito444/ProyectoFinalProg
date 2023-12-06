@@ -21,6 +21,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import hospital.VentaMedicamento;
+
 
 public class GVentasPanel extends JPanel {
 
@@ -46,6 +49,8 @@ public class GVentasPanel extends JPanel {
 			}
 		};
 
+		public ArrayList<VentaMedicamento> listaVentas = new ArrayList<>();
+		
 	public GVentasPanel() {
 		setLayout(null);
 		setBounds(0, 0, 1350, 860);
@@ -128,6 +133,8 @@ public class GVentasPanel extends JPanel {
 				int cliente = Integer.parseInt(clienteTF.getText());
 				int med = Integer.parseInt(medicamentoTF.getText());
 				int cantidad = Integer.parseInt(cantidadTF.getText());
+				
+				listaVentas.add(new VentaMedicamento(med, cantidad, cliente));
 				
 				String query = "INSERT INTO Ventas (ID_Cliente, ID_Medicamento, Cantidad) VALUES (?,?,?)";
 				

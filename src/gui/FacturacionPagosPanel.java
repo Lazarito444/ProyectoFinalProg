@@ -23,6 +23,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import hospital.Factura;
+
 
 public class FacturacionPagosPanel extends JPanel {
 
@@ -35,6 +38,8 @@ public class FacturacionPagosPanel extends JPanel {
 	private JTextField cardTF;
 	private JTextField cvcTF;
 	private JTextField expDateTF;
+	
+	public ArrayList<Factura> listaFacturas = new ArrayList<>();
 	
 	
 	public FacturacionPagosPanel() {
@@ -229,9 +234,13 @@ public class FacturacionPagosPanel extends JPanel {
         
         JLabel payBtn = new JLabel("Pagar Servicio");
         payBtn.addMouseListener(new MouseAdapter() {
+        	
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		String query = "INSERT INTO Facturacion (ID_Cliente, Monto, Razon, MetodoPago) VALUES (?, ?, ?, ?)";
+        		
+            	listaFacturas.add(new Factura("Pago hospital", Double.parseDouble(amountTF.getText()), 
+            			reasonTF.getText()));
         		try {
         			
         			Class.forName("com.mysql.cj.jdbc.Driver");

@@ -17,10 +17,6 @@ import java.awt.Toolkit;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.CardLayout;
 import java.awt.Cursor;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 public class MainFrame extends JFrame {

@@ -14,11 +14,11 @@ public class Personal extends Persona implements IPersonal {
         this.rol = rol;
 	}
 	
-	public Personal(String nombre, String apellido, String usuario, String rol) {
+	public Personal(String nombre, String apellido, String usuario, String contrasena) {
 		super(nombre, apellido);
 		this.usuario = usuario;
-		this.rol = rol;
-		this.contrasena = "12345";
+		this.contrasena = contrasena;
+		this.rol = "No establecido";
 	}
 	
 	public String getUsuario() {

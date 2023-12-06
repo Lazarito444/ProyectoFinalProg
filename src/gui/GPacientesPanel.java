@@ -23,8 +23,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import hospital.Paciente;
 
 import javax.swing.ImageIcon;
 
@@ -55,6 +58,7 @@ public class GPacientesPanel extends JPanel {
 				return columnEditables[column];
 			}
 		};
+	public ArrayList<Paciente> listaPacientes = new ArrayList<>();
 
 	/**
 	 * Create the panel.
@@ -226,7 +230,7 @@ public class GPacientesPanel extends JPanel {
 			String tel = telTF.getText();
 			int gen = gender.getSelectedIndex();
 			String gender[] = new String[] {"M", "F"};
-			
+			listaPacientes.add(new Paciente(nombre, apellido, LocalDate.parse(fechaN), direccion, tel));
 			try {
 				
 				Class.forName("com.mysql.cj.jdbc.Driver");
