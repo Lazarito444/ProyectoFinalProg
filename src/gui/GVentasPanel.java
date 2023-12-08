@@ -3,7 +3,6 @@ package gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -17,12 +16,9 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import hospital.VentaMedicamento;
 
 
 public class GVentasPanel extends JPanel {
@@ -48,8 +44,6 @@ public class GVentasPanel extends JPanel {
 				return columnEditables[column];
 			}
 		};
-
-		public ArrayList<VentaMedicamento> listaVentas = new ArrayList<>();
 		
 	public GVentasPanel() {
 		setLayout(null);
@@ -134,15 +128,11 @@ public class GVentasPanel extends JPanel {
 				int med = Integer.parseInt(medicamentoTF.getText());
 				int cantidad = Integer.parseInt(cantidadTF.getText());
 				
-				listaVentas.add(new VentaMedicamento(med, cantidad, cliente));
-				
 				String query = "INSERT INTO Ventas (ID_Cliente, ID_Medicamento, Cantidad) VALUES (?,?,?)";
 				
 				try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-					
+					Connection con = MySQLConnection.getConnection();
 					PreparedStatement pst = con.prepareStatement(query);
 					pst.setInt(1, cliente);
 					pst.setInt(2, med);
@@ -154,8 +144,6 @@ public class GVentasPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Venta realizada");
 					actualizarTabla();
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}
@@ -188,9 +176,7 @@ public class GVentasPanel extends JPanel {
 		String query = "SELECT * FROM Ventas";
 		try {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-			
+			Connection con = MySQLConnection.getConnection();
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			
@@ -200,9 +186,7 @@ public class GVentasPanel extends JPanel {
 			}
 			con.close();
 			
-		} catch(ClassNotFoundException err) {
-			err.printStackTrace();
-		} catch(SQLException err) {
+		}catch(SQLException err) {
 			err.printStackTrace();
 		}
 	}

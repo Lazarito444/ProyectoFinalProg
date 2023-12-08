@@ -17,23 +17,17 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
-import java.util.ArrayList;
-import hospital.Medicamento;
 
 
 public class GMedicamentosPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField medicamentoTF;
-	
-
-	public ArrayList<Medicamento> listaMedicamentos = new ArrayList<>();
 	
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -161,13 +155,9 @@ public class GMedicamentosPanel extends JPanel {
         		double precio = Double.parseDouble(precioTF.getText());
         		int stock = Integer.parseInt(stockTF.getText());
         		
-        		listaMedicamentos.add(new Medicamento(nombre, precio, stock));
-        		
         		try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-					
+        			Connection con = MySQLConnection.getConnection();
 					String query = "INSERT INTO Medicamentos (Nombre, Precio, Stock) VALUES (?, ?, ?)";
 					
 					PreparedStatement pst = con.prepareStatement(query);
@@ -182,9 +172,7 @@ public class GMedicamentosPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Medicamento agregados");
 					actualizarTabla();
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
-				} catch(SQLException err) {
+				}  catch(SQLException err) {
 					err.printStackTrace();
 				}
         		
@@ -249,9 +237,7 @@ public class GMedicamentosPanel extends JPanel {
 				
 				try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-					
+					Connection con = MySQLConnection.getConnection();
 					Statement statement = con.createStatement();
 					
 					statement.executeUpdate("DELETE FROM Medicamentos WHERE ID_Medicamento='"+idEliminar+"'");
@@ -262,8 +248,6 @@ public class GMedicamentosPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Medicamento eliminado");
 					actualizarTabla();
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}
@@ -363,9 +347,7 @@ public class GMedicamentosPanel extends JPanel {
 		String query = "SELECT * FROM Medicamentos";
 		try {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-			
+			Connection con = MySQLConnection.getConnection();
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			
@@ -375,8 +357,6 @@ public class GMedicamentosPanel extends JPanel {
 			}
 			con.close();
 			
-		} catch(ClassNotFoundException err) {
-			err.printStackTrace();
 		} catch(SQLException err) {
 			err.printStackTrace();
 		}
@@ -387,9 +367,7 @@ public class GMedicamentosPanel extends JPanel {
 		String query = "SELECT * FROM Medicamentos WHERE Nombre LIKE '%"+nom+"%'";
 		try {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-			
+			Connection con = MySQLConnection.getConnection();
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			
@@ -399,8 +377,6 @@ public class GMedicamentosPanel extends JPanel {
 			}
 			con.close();
 			
-		} catch(ClassNotFoundException err) {
-			err.printStackTrace();
 		} catch(SQLException err) {
 			err.printStackTrace();
 		}

@@ -17,7 +17,6 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -254,8 +253,8 @@ public class EditPacienteFrame extends JFrame {
 				String[] gender = new String[] {"M", "F"};
 				
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+					
+					Connection con = MySQLConnection.getConnection();
 					
 					String query = "UPDATE Pacientes SET Nombre=?, Apellido=?, FechaNacimiento=?, Direccion=?, Telefono=?, "
 								 + "Enfermedad=?, Genero=? WHERE ID_Paciente="+idEditar;
@@ -274,9 +273,6 @@ public class EditPacienteFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "Paciente editado");
 					dispose();
 					isOpened = false;
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
-					
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}

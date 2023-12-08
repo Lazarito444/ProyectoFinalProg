@@ -13,7 +13,6 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -118,8 +117,7 @@ public class EditMedicamentoFrame extends JFrame {
 				String query = "UPDATE Medicamentos SET Nombre=?, Precio=?, Stock=? WHERE ID_Medicamento="+id;
 				try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+					Connection con = MySQLConnection.getConnection();
 					
 					PreparedStatement pst = con.prepareStatement(query);
 					
@@ -134,8 +132,6 @@ public class EditMedicamentoFrame extends JFrame {
 					dispose();
 					
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}

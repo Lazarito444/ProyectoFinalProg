@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -18,7 +17,6 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.Cursor;
@@ -234,8 +232,8 @@ public class EditPersonalFrame extends JFrame {
 					String[] gender = new String[] {"M", "F"};
 					
 					try {
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+						
+						Connection con = MySQLConnection.getConnection();
 						
 						String query = "UPDATE Personal SET Nombre=?, Apellido=?, FechaNacimiento=?, Direccion=?, "
 								+ "Usuario=?, Contraseña=?, Telefono=?, Genero=? WHERE ID_Personal="+idEditar;
@@ -255,9 +253,6 @@ public class EditPersonalFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "Paciente editado");
 						dispose();
 
-					} catch(ClassNotFoundException err) {
-						err.printStackTrace();
-						
 					} catch(SQLException err) {
 						err.printStackTrace();
 					}

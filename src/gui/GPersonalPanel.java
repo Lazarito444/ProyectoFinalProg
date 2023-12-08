@@ -18,15 +18,12 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.DefaultComboBoxModel;
-import java.util.ArrayList;
-import hospital.Personal;
 
 public class GPersonalPanel extends JPanel {
 
@@ -47,7 +44,6 @@ public class GPersonalPanel extends JPanel {
 			}
 		);
 
-	public ArrayList<Personal> listaPersonal = new ArrayList<>();
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JTextField userTF;
 	private JTextField passTF;
@@ -332,13 +328,10 @@ public class GPersonalPanel extends JPanel {
 				String tel = telTF.getText();
 				int gen = genero.getSelectedIndex();
 				String[] genero = new String[] {"M", "F"};
-				
-				listaPersonal.add(new Personal(nombre, apellido, user, pass));
+
 				try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-					
+					Connection con = MySQLConnection.getConnection();
 					Statement statement = con.createStatement();
 					
 					statement.executeUpdate("INSERT INTO Personal (Nombre, Apellido, FechaNacimiento, Direccion, Usuario, Contraseña, Telefono, Genero) VALUES ('"
@@ -350,8 +343,6 @@ public class GPersonalPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Personal añadido");
 					actualizarTabla();
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}
@@ -390,9 +381,7 @@ public class GPersonalPanel extends JPanel {
 				
 				try {
 					
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-					
+					Connection con = MySQLConnection.getConnection();
 					Statement statement = con.createStatement();
 					
 					statement.executeUpdate("DELETE FROM Personal WHERE ID_Personal='"+idEliminar+"'");
@@ -403,8 +392,6 @@ public class GPersonalPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Personal eliminado");
 					actualizarTabla();
 					
-				} catch(ClassNotFoundException err) {
-					err.printStackTrace();
 				} catch(SQLException err) {
 					err.printStackTrace();
 				}
@@ -453,9 +440,7 @@ public class GPersonalPanel extends JPanel {
 		String query = "SELECT * FROM Personal";
 		try {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-			
+			Connection con = MySQLConnection.getConnection();
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			
@@ -466,8 +451,6 @@ public class GPersonalPanel extends JPanel {
 			}
 			con.close();
 			
-		} catch(ClassNotFoundException err) {
-			err.printStackTrace();
 		} catch(SQLException err) {
 			err.printStackTrace();
 		}
@@ -478,9 +461,7 @@ public class GPersonalPanel extends JPanel {
 		String query = "SELECT * FROM Personal WHERE Telefono LIKE '%"+tel+"%'";
 		try {
 			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
-			
+			Connection con = MySQLConnection.getConnection();
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rSet = statement.executeQuery();
 			
@@ -491,8 +472,6 @@ public class GPersonalPanel extends JPanel {
 			}
 			con.close();
 			
-		} catch(ClassNotFoundException err) {
-			err.printStackTrace();
 		} catch(SQLException err) {
 			err.printStackTrace();
 		}

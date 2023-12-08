@@ -18,13 +18,10 @@ import javax.swing.JSeparator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import java.util.ArrayList;
-import hospital.Factura;
 
 
 public class FacturacionPagosPanel extends JPanel {
@@ -38,9 +35,6 @@ public class FacturacionPagosPanel extends JPanel {
 	private JTextField cardTF;
 	private JTextField cvcTF;
 	private JTextField expDateTF;
-	
-	public ArrayList<Factura> listaFacturas = new ArrayList<>();
-	
 	
 	public FacturacionPagosPanel() {
 		setBackground(new Color(238, 238, 238));
@@ -238,13 +232,10 @@ public class FacturacionPagosPanel extends JPanel {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		String query = "INSERT INTO Facturacion (ID_Cliente, Monto, Razon, MetodoPago) VALUES (?, ?, ?, ?)";
-        		
-            	listaFacturas.add(new Factura("Pago hospital", Double.parseDouble(amountTF.getText()), 
-            			reasonTF.getText()));
+
         		try {
         			
-        			Class.forName("com.mysql.cj.jdbc.Driver");
-        			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
+        			Connection con = MySQLConnection.getConnection();
         			
         			PreparedStatement pst = con.prepareStatement(query);
         			
@@ -258,8 +249,6 @@ public class FacturacionPagosPanel extends JPanel {
         			con.close();
         			JOptionPane.showMessageDialog(null, "Facturación añadida");
         			
-        		} catch(ClassNotFoundException err) {
-        			err.printStackTrace();
         		} catch(SQLException err) {
         			err.printStackTrace();
         		}

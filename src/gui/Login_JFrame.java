@@ -20,7 +20,6 @@ import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -146,9 +145,8 @@ public class Login_JFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestor_hospital", "root", "admin");
 				
+				Connection con = MySQLConnection.getConnection();
 				Statement statement = con.createStatement();
 				
 				String user = userField.getText();
@@ -167,9 +165,6 @@ public class Login_JFrame extends JFrame {
 				}
 				
 				con.close();
-				
-			} catch(ClassNotFoundException err) {
-				err.printStackTrace();
 				
 			} catch(SQLException err) {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
